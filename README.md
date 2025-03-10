@@ -7,6 +7,9 @@
 
  - https://byui-cse.github.io/wdd330-ww-course/week01/team.html
 
+ URL site running in Netlify:
+ https://sleep-outside-team-activity.netlify.app/
+
 ### Prerequisites
 
 - You must have Node installed to run the following commands.
