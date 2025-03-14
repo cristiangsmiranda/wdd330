@@ -9,22 +9,17 @@ export function qs(selector, parent = document) {
 export function getLocalStorage(key) {
   return JSON.parse(localStorage.getItem(key));
 }
-
-// save data to local storage (ensuring multiple items are stored)
+// save data to local storage
 export function setLocalStorage(key, data) {
-  // Pega os itens atuais do localStorage
-  let currentCart = JSON.parse(localStorage.getItem(key)) || [];
+  localStorage.setItem(key, JSON.stringify(data));
+}
 
-  // Verifica se o currentCart é um array (evita possíveis erros)
-  if (!Array.isArray(currentCart)) {
-    currentCart = [];
-  }
-
-  // Adiciona o novo item ao array
-  currentCart.push(data);
-
-  // Salva o array atualizado no localStorage
-  localStorage.setItem(key, JSON.stringify(currentCart));
+// helper to get parameter strings
+export function getParam(param) {
+  const queryString = window.location.search;
+  const urlParams = new URLSearchParams(queryString);
+  const product = urlParams.get(param);
+  return product;
 }
 
 // set a listener for both touchend and click
