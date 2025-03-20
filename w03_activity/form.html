@@ -1,0 +1,27 @@
+<form id="formElem">
+    <input type="text" name="name" value="John">
+    <input type="text" name="surname" value="Smith">
+    <input type="submit">
+  </form>
+  
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const formElem = document.getElementById('formElem');
+  
+      formElem.addEventListener('submit', (event) => {
+        event.preventDefault();
+  
+        // Create a FormData object to gather the form data
+        const formData = new FormData(formElem);
+  
+        // Append the current date as an additional field named 'submitted'
+        formData.append('submitted', new Date().toString());
+  
+        // Log all the keys and values from the form data, including the new 'submitted' field
+        for (let key of formData.keys()) {
+          console.log(key, formData.get(key));
+        }
+      });
+    });
+  </script>
+  
