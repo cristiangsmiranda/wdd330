@@ -1,4 +1,10 @@
 import { getLocalStorage, loadHeaderFooter } from "./utils.mjs";
+import Discount from "./discount.js";
+
+// Outras importações
+
+const discount = new Discount();
+discount.init();
 
 loadHeaderFooter();
 
