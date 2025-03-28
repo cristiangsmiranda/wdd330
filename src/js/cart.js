@@ -1,10 +1,4 @@
 import { getLocalStorage, loadHeaderFooter } from "./utils.mjs";
-import Discount from "./discount.js";
-
-// Outras importações
-
-const discount = new Discount();
-discount.init();
 
 loadHeaderFooter();
 
@@ -20,7 +14,7 @@ function cartItemTemplate(item) {
     <img
       src="${item.Image}"
       alt="${item.Name}"
-    />
+   >
   </a>
   <a href="#">
     <h2 class="card__name">${item.Name}</h2>
