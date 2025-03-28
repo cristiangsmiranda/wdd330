@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>WDD 300</title>
+    <style>
+        body {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          height: 100vh;
+          margin: 0;
+        }
+
+        .middleware {
+	      display: flex;
+	      align-items: center;
+	      justify-content: center;
+        }
+
+        @keyframes myanima {
+          0% {
+            transform: translateY(0);
+            background-color: rgb(238, 170, 170);
+            color: rgb(39, 39, 81);
+            width: 100px;
+            height: 100px;
+            border-radius: 100%;
+            font-size: 20px;
+        }
+          20% {
+            transform: translateX(-100px) translateY(-100px);
+            background-color: rgb(170, 34, 34);
+            color: rgb(255, 255, 255);
+            width: 150px;
+            height: 150px;
+            border-radius: 65%;
+            font-size: 30px;
+          }
+          40% {
+            transform: translateX(200px) translateY(-100px);
+            background-color: rgb(228, 102, 220);
+            color: rgb(0, 0, 0);
+            width: 200px;
+            height: 200px;
+            border-radius: 30%;
+            font-size: 45px;
+          }
+          60% {
+            transform: translateX(-200px) translateY(100px);
+            background-color: rgb(103, 35, 124);
+            color: rgb(169, 169, 228);
+            width: 300px;
+            height: 300px;
+            border-radius: 5%;
+            font-size: 60px;
+          }
+          80% {
+            transform: translateX(200px) translateY(100px);
+            background-color: rgb(123, 73, 222);
+            color: rgb(216, 237, 220);
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            font-size: 35px;
+          }
+          100% {
+            transform: translateY(0);
+            background-color: rgb(170, 34, 34);
+            color: rgb(255, 255, 255);
+            width: 100px;
+            height: 100px;
+            border-radius: 100%;
+    	    font-size: 20px;
+          }
+        }
+        
+        .box {
+          animation: myanima 3s infinite alternate;
+          margin: 0;
+	      border: 1px solid rgb(0 0 0 / 0.2);
+          padding: 0.5rem;
+	      width: 100px;
+	      height: 100px;
+	      border-radius: 100%;
+          font-style: italic;
+	      animation: myanima 10s infinite;
+        }
+    </style>
+  </head>
+  <body>
+    <div class="box middleware">WDD 330</div>
+  </body>
+</html>
