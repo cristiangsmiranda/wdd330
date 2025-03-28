@@ -1,75 +1,43 @@
-import { getLocalStorage, setLocalStorage, qs, renderListWithTemplate } from "./utils.mjs";
+import { getLocalStorage } from "./utils.mjs";
+
+function cartItemTemplate(item) {
+  const newItem = `<li class="cart-card divider">
+  <a href="#" class="cart-card__image">
+    <img
+      src="${item.Images.PrimaryMedium}"
+      alt="${item.Name}"
+    />
+  </a>
+  <a href="#">
+    <h2 class="card__name">${item.Name}</h2>
+  </a>
+  <p class="cart-card__color">${item.Colors[0].ColorName}</p>
+  <p class="cart-card__quantity">qty: 1</p>
+  <p class="cart-card__price">$${item.FinalPrice}</p>
+</li>`;
+
+  return newItem;
+}
 
 export default class ShoppingCart {
-  constructor() {
-    this.cartItems = getLocalStorage("so-cart") || [];
-    this.cartElement = qs("#cart-items");
-    this.cartFooter = qs(".list-footer");  // O elemento que mostra o total e o botão de checkout
-    this.cartTotalElement = qs("#cart-total"); // O span que exibe o total
+  constructor(key, parentSelector) {
+    this.key = key;
+    this.parentSelector = parentSelector;
+    this.total = 0;
   }
-
-  init() {
-    this.renderCart();
-    this.addEventListeners();
+  async init() {
+    const list = getLocalStorage(this.key);
+    this.calculateListTotal(list);
+    this.renderCartContents(list);
   }
-
-  renderCart() {
-    if (this.cartItems.length === 0) {
-      this.cartElement.innerHTML = "<p>Your cart is empty.</p>";
-      this.hideCartTotal();
-      return;
-    }
-
-    // Renderiza os itens do carrinho
-    renderListWithTemplate(this.cartItemTemplate, this.cartElement, this.cartItems, "afterbegin", true);
-    
-    // Mostra o total e o calcula
-    this.showCartTotal();
+  calculateListTotal(list) {
+    const amounts = list.map((item) => item.FinalPrice);
+    this.total = amounts.reduce((sum, item) => sum + item);
   }
-
-  // Exibe o total do carrinho
-  showCartTotal() {
-    const total = this.calculateTotal();
-    this.cartTotalElement.textContent = total.toFixed(2);  // Exibe o total com 2 casas decimais
-    this.cartFooter.classList.remove("hide"); // Exibe o footer com o total e o botão de checkout
-  }
-
-  // Esconde o total e o botão de checkout caso o carrinho esteja vazio
-  hideCartTotal() {
-    this.cartFooter.classList.add("hide");
-  }
-
-  // Calcula o total do carrinho
-  calculateTotal() {
-    return this.cartItems.reduce((total, item) => total + item.FinalPrice, 0);
-  }
-
-  cartItemTemplate(item) {
-    return `
-      <li class="cart-item">
-        <img src="${item.Image}" alt="${item.NameWithoutBrand}" class="cart-item__image" />
-        <div class="cart-item__details">
-          <h3>${item.Brand.Name} - ${item.NameWithoutBrand}</h3>
-          <p>Price: $${item.FinalPrice}</p>
-          <p>Color: ${item.Colors[0].ColorName}</p>
-          <button class="remove-item" data-id="${item.Id}">Remove</button>
-        </div>
-      </li>
-    `;
-  }
-
-  addEventListeners() {
-    this.cartElement.addEventListener("click", (event) => {
-      if (event.target.classList.contains("remove-item")) {
-        const productId = event.target.dataset.id;
-        this.removeItemFromCart(productId);
-      }
-    });
-  }
-
-  removeItemFromCart(productId) {
-    this.cartItems = this.cartItems.filter(item => item.Id !== productId);
-    setLocalStorage("so-cart", this.cartItems);
-    this.renderCart();
+  renderCartContents() {
+    const cartItems = getLocalStorage(this.key);
+    const htmlItems = cartItems.map((item) => cartItemTemplate(item));
+    document.querySelector(this.parentSelector).innerHTML = htmlItems.join("");
+    document.querySelector(".list-total").innerText += ` $${this.total}`;
   }
 }
