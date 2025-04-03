@@ -1,0 +1,103 @@
+
+
+
+<!DOCTYPE html>
+<html lang="pt">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript Geolocation com Google Maps</title>
+    <script
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDRWJwSB7aDswxKX1QxqmDpvQYtBOv20rQ&callback=initMap"
+      async
+      defer
+    ></script>
+    <style>
+      /* Defina a altura do mapa */
+      #map {
+        height: 400px;
+        width: 400px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>JavaScript Geolocation</h1>
+    <p>Click the button to get your coordinates and show them on the map.</p>
+    <button onclick="getLocation()">Try It</button>
+    <p id="demo"></p>
+    <div id="map"></div>
+
+    <script>
+      const x = document.getElementById("demo");
+
+      let map;
+      let marker;
+
+      // Função para iniciar o mapa com a localização
+      function initMap(latitude = -15.7801, longitude = -47.9292) {
+        // Configurações iniciais do mapa
+        map = new google.maps.Map(document.getElementById("map"), {
+          center: { lat: latitude, lng: longitude },
+          zoom: 15,
+        });
+
+        // Adiciona um marcador no mapa
+        marker = new google.maps.Marker({
+          position: { lat: latitude, lng: longitude },
+          map: map,
+        });
+      }
+
+      // Função para pegar a localização do usuário
+      function getLocation() {
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(
+            showPosition,
+            showError
+          );
+        } else {
+          x.innerHTML = "Geolocation is not supported by this browser.";
+        }
+      }
+
+      // Exibe a posição no elemento da página e no mapa
+      function showPosition(position) {
+        const latitude = position.coords.latitude;
+        const longitude = position.coords.longitude;
+
+        x.innerHTML =
+          "Latitude: " +
+          latitude +
+          "<br>Longitude: " +
+          longitude;
+
+        // Atualiza o mapa com a nova localização
+        if (marker) {
+          marker.setMap(null); // Remove marcador antigo
+        }
+
+        initMap(latitude, longitude); // Inicia o mapa com a nova localização
+      }
+
+      // Exibe erro caso a geolocalização falhe
+      function showError(error) {
+        switch (error.code) {
+          case error.PERMISSION_DENIED:
+            x.innerHTML = "User denied the request for Geolocation.";
+            break;
+          case error.POSITION_UNAVAILABLE:
+            x.innerHTML = "Location information is unavailable.";
+            break;
+          case error.TIMEOUT:
+            x.innerHTML = "The request to get user location timed out.";
+            break;
+          case error.UNKNOWN_ERROR:
+            x.innerHTML = "An unknown error occurred.";
+            break;
+        }
+      }
+    </script>
+  </body>
+</html>
+
+

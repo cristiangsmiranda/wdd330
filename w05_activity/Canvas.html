@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Faces with Canvas</title>
+  <style>
+    canvas {
+      border: 1px solid black;
+    }
+  </style>
+</head>
+<body>
+  <h1>click to switch between Faces!</h1>
+  <canvas id="canvas" width="200" height="200" onclick="toggleFace()"></canvas>
+
+  <script>
+    const canvas = document.getElementById("canvas");
+    const ctx = canvas.getContext("2d");
+    
+    let isHappyFace = true; // Controla qual rosto está sendo mostrado
+
+    // Função para desenhar o rosto feliz
+    function drawHappyFace() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height); // Limpa o canvas
+
+      // Rosto
+      ctx.beginPath();
+      ctx.arc(100, 100, 50, 0, Math.PI * 2, true); // Círculo do rosto
+      ctx.stroke();
+      // Olhos
+      ctx.beginPath();
+      ctx.arc(80, 85, 5, 0, Math.PI * 2, true); // Olho esquerdo
+      ctx.arc(120, 85, 5, 0, Math.PI * 2, true); // Olho direito
+      ctx.fill();
+      // Boca (sorriso)
+      ctx.beginPath();
+      ctx.arc(100, 105, 30, 0, Math.PI, false); // Boca sorrindo
+      ctx.stroke();
+    }
+
+    // Função para desenhar o rosto carrancudo
+    function drawSadFace() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height); // Limpa o canvas
+
+      // Rosto
+      ctx.beginPath();
+      ctx.arc(100, 100, 50, 0, Math.PI * 2, true); // Círculo do rosto
+      ctx.stroke();
+      // Olhos
+      ctx.beginPath();
+      ctx.arc(80, 85, 5, 0, Math.PI * 2, true); // Olho esquerdo
+      ctx.arc(120, 85, 5, 0, Math.PI * 2, true); // Olho direito
+      ctx.fill();
+      //sobrancelha
+      ctx.beginPath();
+      ctx.arc(80, 78, 2, Math.PI, 0, true); // sobrancelha
+      ctx.arc(120, 78, 2, Math.PI, 0, true); // sobrancelha
+      ctx.stroke();
+      // Boca (boca carrancuda)
+      ctx.beginPath();
+      ctx.arc(100, 130, 30, Math.PI, 0, false); // Boca triste
+      ctx.stroke();
+    }
+
+    // Função para alternar entre os rostos
+    function toggleFace() {
+      isHappyFace = !isHappyFace; // Alterna o estado
+
+      if (isHappyFace) {
+        drawHappyFace();
+      } else {
+        drawSadFace();
+      }
+    }
+
+    // Desenha o rosto inicial
+    drawHappyFace();
+  </script>
+</body>
+</html>
